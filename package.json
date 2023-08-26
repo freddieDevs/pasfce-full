@@ -1,0 +1,19 @@
+{
+  "name": "pasfce-full",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "node apps/api/dist/main"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.12"
+  },
+  "workspaces" : [
+    "apps/*"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Staff {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  staffKey    String    @unique
+  password    String
+  salt        String
+  firstname   String
+  surname     String
+  phoneNumber String
+  jobPosition Role
+  email       String    @unique
+  idNumber    String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  members     Member[]  @relation("StaffToMember")
+  reports     Report[]  @relation("StaffToReport")
+  clusters    Cluster[] @relation("StaffToCluster")
+}
+
+model Cluster {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  members   Member[] @relation("ClusterToMember")
+  reports   Report[] @relation("ClusterToReport")
+  name      String
+  county    String
+  staffId   String   @db.ObjectId
+  staff     Staff    @relation("StaffToCluster", fields: [staffId], references: [id])
+}
+
+enum Role {
+  DIRECTOR
+  PROJECT_MANAGER
+  REGIONAL_COORDINATOR
+  ZONAL_MANAGER
+  CENTER_MANAGER
+  FIELD_OFFICER
+}
+
+model Member {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String
+  surname      String
+  idNumber     String      @unique
+  phoneNumber  String      @unique
+  email        String      @unique
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  gender       String
+  clusterId    String      @db.ObjectId
+  cluster      Cluster     @relation("ClusterToMember", fields: [clusterId], references: [id])
+  memberId     String
+  staffId      String      @db.ObjectId
+  staff        Staff       @relation("StaffToMember", fields: [staffId], references: [id])
+  memberStatus Status
+  rewardStatus RewardLevel
+}
+
+enum Status {
+  JOINED
+  COMPLETE
+  PAYING_FEE
+  SUSPENDED
+  EXPELLED
+}
+
+enum RewardLevel {
+  BEGINNER
+  BABYBEAR
+  MAMABEAR
+  PAPABEAR
+  PLATINUM
+  BRONZE
+  SILVER
+  GOLD
+  ADVANCED
+  PERENIAL
+  GLOBAL
+}
+
+model Report {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  staffId      String   @db.ObjectId
+  staff        Staff    @relation("StaffToReport", fields: [staffId], references: [id])
+  clusterId    String   @db.ObjectId
+  cluster      Cluster  @relation("ClusterToReport", fields: [clusterId], references: [id])
+  newMembers   String
+  clusterTotal String
+  inAttendance String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
