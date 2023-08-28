@@ -17,7 +17,6 @@ export const ClusterPage = () => {
     }
   }, [clusterData, navigate])
   if (typeof clusterData === 'string') {
-    
     return null;
   }
   console.log(clusters);
