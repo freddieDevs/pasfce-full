@@ -51,24 +51,24 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-       <div className="flex items-center py-4">
+       <div className="flex items-center py-4 text-accent">
         <Input
           placeholder="Search"
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm bg-cyan-700 text-accent"
         />
-      </div>
-      <div className="rounded-md border">
+        </div>
+      <div className="rounded-md border border-cyan-700 bg-cyan-800 text-accent">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-slate-400">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -105,12 +105,13 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-end space-x-2 py-4 ">
         <Button
           variant="outline"
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          className="bg-cyan-800 hover:bg-cyan-700 text-accent"
         >
           Previous
         </Button>
@@ -119,6 +120,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          className="bg-cyan-800 hover:bg-cyan-700 text-accent"
         >
           Next
         </Button>
