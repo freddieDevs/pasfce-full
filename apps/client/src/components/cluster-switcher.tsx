@@ -43,8 +43,8 @@ export default function ClusterSwitcher({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant='outline' size='sm' role="combobox" aria-expanded={open} aria-label="Select a cluster" className={cn("w-[200px] justify-between", className)}>
-          <StoreIcon className="mr-2 h-4 w-4"/>
-          {currentCluster?.label}
+          <StoreIcon className="mr-2 h-4 w-4 text-cyan-700"/>
+          <span className="text-cyan-700">{currentCluster?.label}</span>
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50"/>
         </Button>
       </PopoverTrigger>
@@ -53,17 +53,20 @@ export default function ClusterSwitcher({
           <CommandList>
             <CommandInput placeholder="Search Cluster..."/>
             <CommandEmpty>No Cluster Found</CommandEmpty>
-            <CommandGroup heading="Stores">
+            <CommandGroup heading="Clusters">
               {formattedItems. map((cluster) => (
                 <CommandItem
                   key={cluster.value}
                   onSelect={() => onClusterSelect(cluster)}
-                  className="text-sm"
+                  className={cn("text-sm text-cyan-700", currentCluster?.value === cluster.value 
+                    ? 'opacity-100'
+                    : 'opacity-75 text-slate-500'
+                  )}
                 >
-                  <StoreIcon className="mr-2 h-4 w-4"/>
+                  <StoreIcon className="mr-2 h-4 w-4 text-cyan-600"/>
                   {cluster.label}
                   <Check 
-                    className={cn("ml-auto h-4 w-4",
+                    className={cn("ml-auto h-4 w-4  text-cyan-600",
                     currentCluster?.value === cluster.value
                       ? 'opacity-100'
                       : 'opacity-0'
@@ -82,8 +85,8 @@ export default function ClusterSwitcher({
                   clusterModal.onOpen()
                 }}
               >
-                <PlusCircle className="mr-2 h-5 w-5"/>
-                Create Store
+                <PlusCircle className="mr-2 h-5 w-5 text-cyan-700"/>
+                <span className="text-cyan-700">Create Cluster</span>
               </CommandItem>
             </CommandGroup>
           </CommandList>

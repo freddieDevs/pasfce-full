@@ -56,12 +56,13 @@ export const ClusterModal = () => {
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name of Cluster</FormLabel>
+                    <FormLabel className='text-cyan-800'>Name of Cluster</FormLabel>
                     <FormControl>
                       <Input 
                         disabled={loading}
                         placeholder='Enter name for new cluster'
                         { ...field }
+                        className='bg-cyan-800 text-accent'
                       />
                     </FormControl>
                     <FormMessage />
@@ -73,12 +74,13 @@ export const ClusterModal = () => {
                 name='county'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>County</FormLabel>
+                    <FormLabel className='text-cyan-800'>County</FormLabel>
                     <FormControl>
                       <Input 
                         disabled={loading}
                         placeholder='Enter county to which cluster will belong'
                         { ...field }
+                        className='bg-cyan-800 text-accent'
                       />
                     </FormControl>
                     <FormMessage />
@@ -90,8 +92,9 @@ export const ClusterModal = () => {
                   disabled={loading}
                   variant='outline'
                   onClick={clusterModal.onClose}
+                  className='text-cyan-700 bg-slate-100'
                 >Cancel</Button>
-                <Button type='submit' disabled={loading}>
+                <Button type='submit' disabled={loading} className='bg-cyan-800 text-accent'>
                   Continue
                 </Button>
               </div>

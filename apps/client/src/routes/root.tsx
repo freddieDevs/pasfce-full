@@ -37,7 +37,7 @@ export const Root = () => {
         </div>
         <div className="flex h-[100vh] w-screen mb-5 py-6 ">
           <div className='hidden md:flex flex-col gap-y-2 h-full w-[250px] px-2 border-r-2'>
-            <Sidebar />
+            <Sidebar data = {clusters}/>
           </div>
           <div className="flex-1 overflow-y-auto px-6 ">
             <Outlet context={clusters}/>

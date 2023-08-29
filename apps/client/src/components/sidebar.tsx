@@ -1,22 +1,27 @@
 import { cn } from '@/lib/utils';
-import { useLocation, NavLink, useParams, useOutletContext } from 'react-router-dom'
+import { useLocation, NavLink, useParams } from 'react-router-dom'
 import ClusterSwitcher from './cluster-switcher';
 import { Cluster } from '@/types/types';
 import { useEffect, useState } from 'react';
 
-export const Sidebar = () => {
+interface SidebarProps {
+  data: Cluster[] | null;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({
+  data
+}) => {
   const { pathname } = useLocation();
-  const clustersData = useOutletContext() as Cluster[] | null;
   const [clusterArray, setClusterArray] = useState<Cluster[] | []>([]);
   const params = useParams();
 
   useEffect(() => {
-    if(clustersData === null) {
+    if(data === null) {
       setClusterArray([]);
     } else {
-      setClusterArray(clustersData);
+      setClusterArray(data);
     }
-  }, [clustersData]);
+  }, [data]);
 
   const routes = [
     {

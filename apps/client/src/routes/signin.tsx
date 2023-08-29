@@ -67,7 +67,8 @@ export const SigninPage = () => {
                   <FormItem>
                     <FormLabel>Username</FormLabel>
                     <FormControl>
-                      <Input disabled={loading} placeholder='Enter your username' {...field}/>
+                      <Input disabled={loading} placeholder='Enter your username' {...field} className="bg-cyan-700 text-accent"
+                      />
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -79,7 +80,7 @@ export const SigninPage = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input disabled={loading} placeholder='Enter your password' {...field} type="password"/>
+                      <Input disabled={loading} placeholder='Enter your password' {...field} type="password" className="bg-cyan-700 text-accent"/>
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -87,7 +88,7 @@ export const SigninPage = () => {
               />
               <div className='pt-6 space-x-2 flex items-center justify-end w-full'>
                 <Button type='submit' disabled={loading}
-                  className="bg-cyan-900 text-accent hover:bg-cyan-800"
+                  className="bg-cyan-700 text-accent hover:bg-cyan-800"
                 >
                   Sign in
                 </Button>
