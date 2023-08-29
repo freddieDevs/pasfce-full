@@ -1,37 +1,48 @@
-import { columns } from "@/components/columns"
 import { DataTable } from "@/components/data-table"
 import { Button } from "@/components/ui/button"
 import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
 import { useMemberModal } from "@/hooks/use-member"
+import { Cluster, Member } from "@/types/types"
 import { Plus } from 'lucide-react'
+import { useOutletContext, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { format } from 'date-fns'
+import { MemberColumn, memberColumns } from "@/components/members/members-columns"
 
-
-const data = [
-  {
-    id: '1',
-    name: 'user1',
-    createdAt: 'now' 
-  },
-  {
-    id: '2',
-    name: 'user2',
-    createdAt: 'now' 
-  },
-  {
-    id: '3',
-    name: 'user3',
-    createdAt: 'now' 
-  },
-  {
-    id: '4',
-    name: 'user4',
-    createdAt: 'now' 
-  },
-]
+/**
+ * go through clusters and filter members who belong to the particular cluster only and render them
+ * usestate, useeffect filtering, params for filtering 
+ */
 
 export const MembersPage = () => {
   const memberModal = useMemberModal();
+  const params = useParams();
+  const clusterData = useOutletContext() as Cluster[] | null;
+  const [members, setMembers] = useState<Member[] | []>([]);
+
+  useEffect(() => {
+    if (clusterData && params.clusterId) {
+      const currentCluster = clusterData.find((cluster) => cluster.id === params.clusterId);
+      if (currentCluster) {
+        setMembers(currentCluster.members);
+      } else {
+        setMembers([]);
+      }
+    }
+  }, [clusterData, params.clusterId]);
+
+  const formattedMembers: MemberColumn[] = members.map((item) => ({
+    id: item.id,
+    firstName: item.firstName,
+    surname: item.surname,
+    email: item.email,
+    memberId: item.memberId,
+    memberStatus: item.memberStatus,
+    rewardStatus: item.rewardStatus,                            
+    createdAt: format(new Date(item.createdAt), 'dd MMMM yyyy'),
+  }))
+  
   return (
     <>
       <div className="flex items-center justify-between">
@@ -45,7 +56,7 @@ export const MembersPage = () => {
       </Button>
       </div>
       <Separator className="mt-4"/>
-      <DataTable searchKey="name" columns={columns} data={data}/> 
+      <DataTable searchKey="name" columns={memberColumns} data={formattedMembers}/> 
     </>
   )
 }
