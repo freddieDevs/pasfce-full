@@ -8,6 +8,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import * as z from 'zod'
+import { toast } from 'react-hot-toast'
 
 const formSchema = z.object({
   // how you schema will look like
@@ -46,6 +47,7 @@ export const SigninPage = () => {
       //redirect to clusters page
       navigate('/');
     } catch (error) {
+      toast.error('invalid credentials')
       console.error('AUTHERROR', error);
     } finally {
       setLoading(false);

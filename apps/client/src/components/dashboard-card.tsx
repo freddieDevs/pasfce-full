@@ -6,7 +6,7 @@ import { ReactElement } from "react";
 export type CardInfo = {
   title: string;
   description: string;
-  amount: string;
+  amount: number;
   Icon: ReactElement;
 }
 
