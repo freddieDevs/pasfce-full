@@ -1,4 +1,4 @@
-import { CardInfo, DashboardCard } from "@/components/dashboard-card"
+import { DashboardCard } from "@/components/dashboard-card"
 import { Cluster } from "@/types/types";
 import { Users2Icon, MoveUpIcon, MoveDownIcon, MoveHorizontalIcon, BringToFront  } from 'lucide-react'
 import { useOutletContext } from 'react-router-dom';
