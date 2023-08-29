@@ -22,6 +22,7 @@ function App() {
       path: "/:clusterId",
       element: <Root />,
       errorElement: <ErrorPage />,
+      loader: clustersLoader,
       children: [
         {
           index: true,

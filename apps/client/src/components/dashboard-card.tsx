@@ -20,7 +20,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
   return (
     <>
       <Tabs defaultValue="overview">
-        <TabsList>
+        <TabsList className="bg-cyan-700/100 text-accent">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
@@ -28,7 +28,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
         <TabsContent value="overview" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {data.map((item) => (
-              <Card key={item.title}>
+              <Card key={item.title} className="bg-cyan-700/100 text-accent">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-lg font-medium">
                     {item.title}
@@ -39,7 +39,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
                   <div className="text-2xl font-bold">
                     {item.amount}
                   </div>
-                  <p className="text-xs text-muted-foreground">{item.description}</p>
+                  <p className="text-xs text-slate-400">{item.description}</p>
                 </CardContent>
               </Card>
             ))}

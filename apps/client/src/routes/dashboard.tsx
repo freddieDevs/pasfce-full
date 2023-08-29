@@ -41,7 +41,6 @@ const data = [
 ]
 
 export const DashboardPage = () => {
-
   return (
     <div>
       <DashboardCard data={data}/>
