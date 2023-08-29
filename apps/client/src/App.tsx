@@ -4,7 +4,7 @@ import ErrorPage from "@/error-page";
 import { DashboardPage } from "@/routes/dashboard";
 import { MembersPage } from "@/routes/members";
 import { StaffPage } from "@/routes/staffs";
-import { NewMembersPage } from "@/routes/new-members";
+import { MemberIdPage } from "@/routes/member-id";
 import { SavingsPage } from "@/routes/savings";
 import { SigninPage } from "@/routes/signin";
 import { ModalProvider } from "@/providers/modal-provider";
@@ -34,12 +34,12 @@ function App() {
          
         },
         {
-          path: '/:clusterId/staffs',
-          element: <StaffPage />
+          path: '/:clusterId/members/:memberId',
+          element: <MemberIdPage />
         },
         {
-          path: '/:clusterId/newmembers',
-          element: <NewMembersPage />
+          path: '/:clusterId/staffs',
+          element: <StaffPage />
         },
         {
           path: '/:clusterId/savings',

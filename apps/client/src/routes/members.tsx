@@ -2,10 +2,9 @@ import { DataTable } from "@/components/data-table"
 import { Button } from "@/components/ui/button"
 import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
-import { useMemberModal } from "@/hooks/use-member"
 import { Cluster, Member } from "@/types/types"
 import { Plus } from 'lucide-react'
-import { useOutletContext, useParams } from 'react-router-dom'
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { MemberColumn, memberColumns } from "@/components/members/members-columns"
@@ -16,7 +15,7 @@ import { MemberColumn, memberColumns } from "@/components/members/members-column
  */
 
 export const MembersPage = () => {
-  const memberModal = useMemberModal();
+  const navigate = useNavigate();
   const params = useParams();
   const clusterData = useOutletContext() as Cluster[] | null;
   const [members, setMembers] = useState<Member[] | []>([]);
@@ -50,13 +49,13 @@ export const MembersPage = () => {
         description="Manage your data"
       />
       {/* add a button for adding new members */}
-      <Button onClick={() => memberModal.onOpen()}>
+      <Button onClick={() => navigate(`/${params.clusterId}/members/new`)} className="bg-cyan-700 text-accent hover:bg-cyan-800">
         <Plus className="mr-2 h-4 w-4"/>
         Add new member
       </Button>
       </div>
       <Separator className="mt-4"/>
-      <DataTable searchKey="name" columns={memberColumns} data={formattedMembers}/> 
+      <DataTable searchKey="firstName" columns={memberColumns} data={formattedMembers}/> 
     </>
   )
 }

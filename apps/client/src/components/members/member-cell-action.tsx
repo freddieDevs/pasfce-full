@@ -3,7 +3,7 @@ import { AlertModal } from "../modals/alert-modal"
 import { Button } from "../ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react"
 import { toast } from 'react-hot-toast';
 import { MemberColumn } from "./members-columns"
@@ -15,6 +15,7 @@ interface MemberCellActionProps {
 export const MemberCellAction: React.FC<MemberCellActionProps> = ({
   data
 }) => {
+  const params = useParams();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -58,7 +59,7 @@ export const MemberCellAction: React.FC<MemberCellActionProps> = ({
               <Copy className="mr-2 h-4 w-4"/>
               Copy Id
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={()=> navigate(`/${data.id}`)}>
+            <DropdownMenuItem onClick={()=> navigate(`/${params.clusterId}/members/${data.id}`)}>
               <Edit className="mr-2 h-4 w-4"/>
               View
             </DropdownMenuItem>
