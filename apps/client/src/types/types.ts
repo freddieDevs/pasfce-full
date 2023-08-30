@@ -37,7 +37,7 @@ export interface Member {
   updatedAt: string;
 }
 
-enum Status {
+export enum Status {
   JOINED = 'JOINED',
   COMPLETE = 'COMPLETE',
   PAYING_FEE = 'PAYING_FEE',
@@ -45,7 +45,7 @@ enum Status {
   EXPELLED = 'EXPELLED',
 }
 
-enum RewardLevel {
+export enum RewardLevel {
   BEGINNER = 'BEGINNER',
   BABYBEAR = 'BABYBEAR',
   MAMABEAR = 'MAMABEAR',

@@ -16,6 +16,7 @@ export const MemberIdPage = () => {
   const clusterData = useOutletContext() as Cluster[] | null;
   const params = useParams();
   const [member, setMember] = useState<Member | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (clusterData && params.clusterId) {
@@ -25,15 +26,21 @@ export const MemberIdPage = () => {
         if (individual) {
           setMember(individual);
         } 
+        
       }
     } else {
       setMember(null);
     }
+    setLoading(false);
   }, [clusterData, params.clusterId, params.memberId])
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
-      <MemberForm data={member}/>
+        <MemberForm data={member || null}/>
     </>
   )
 }
