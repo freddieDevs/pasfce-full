@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Status } from '@/types/types'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 interface MemberFormProps {
   data: Member | null;
@@ -128,7 +129,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                     </FormItem>
                   )}
                 />
-                  <FormField control={form.control}
+                <FormField control={form.control}
                   name='email'
                   render={({field})=> (
                     <FormItem>
@@ -141,21 +142,29 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                     </FormItem>
                   )}
                 />
-                  <FormField control={form.control}
+                <FormField control={form.control}
                   name='gender'
                   render={({field})=> (
                     <FormItem>
                       <FormLabel>Gender</FormLabel>
-                      <FormControl>
-                        {/* change to select */}
-                        <Input disabled={loading} placeholder='male or female' {...field} className="bg-cyan-700 text-accent"
-                        />
-                      </FormControl>
+                      <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-cyan-700 text-accent">
+                            <SelectValue placeholder='male or female' {...field}  defaultValue={field.value}
+                            className="text-accent"
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-cyan-700 text-accent">
+                          <SelectItem value="Male">Male</SelectItem>
+                          <SelectItem value="Female">Female</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage/>
                     </FormItem>
                   )}
                 />
-                 <FormField control={form.control}
+                <FormField control={form.control}
                   name='idNumber'
                   render={({field})=> (
                     <FormItem>
@@ -191,10 +200,22 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                       render={({field})=> (
                         <FormItem>
                           <FormLabel>Member Status </FormLabel>
-                          <FormControl>
-                            <Input disabled={loading} placeholder='Update Member Status' {...field} className="bg-cyan-700 text-accent"
-                            />
-                          </FormControl>
+                          <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger className="bg-cyan-700 text-accent">
+                                <SelectValue placeholder='update Member Status' {...field}  defaultValue={field.value}
+                                className="text-accent"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="bg-cyan-700 text-accent">
+                              {Object.values(Status).map((stat) => (
+                                <SelectItem
+                                  key={stat} value={stat}
+                                >{stat}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                           <FormMessage/>
                         </FormItem>
                       )}
@@ -204,10 +225,22 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                       render={({field})=> (
                         <FormItem>
                           <FormLabel>Reward Level </FormLabel>
-                          <FormControl>
-                            <Input disabled={loading} placeholder='Update Reward Level' {...field} className="bg-cyan-700 text-accent"
-                            />
-                          </FormControl>
+                          <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger className="bg-cyan-700 text-accent">
+                                <SelectValue placeholder='update reward level' {...field}  defaultValue={field.value}
+                                className="text-accent"
+                                />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="bg-cyan-700 text-accent">
+                              {Object.values(RewardLevel).map((level) => (
+                                <SelectItem
+                                  key={level} value={level}
+                                >{level}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                           <FormMessage/>
                         </FormItem>
                       )}
