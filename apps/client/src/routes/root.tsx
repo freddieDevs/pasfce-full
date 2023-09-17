@@ -5,6 +5,11 @@ import { Cluster } from "@/types/types"
 import { useEffect, useState } from "react"
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
 
+/**
+ * I need to implement redux to manage state changes 
+ * as data seems to be stale at some point
+ */
+
 export const Root = () => {
   const navigate = useNavigate();
   const data = useLoaderData() as Cluster[] | string;

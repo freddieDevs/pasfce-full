@@ -2,7 +2,7 @@ import { Member, RewardLevel } from "@/types/types";import { zodResolver } from 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as z from 'zod';
 import { AlertModal } from "../modals/alert-modal";
 import { Heading } from "../ui/heading";
@@ -11,6 +11,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Status } from '@/types/types'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import axios from "axios";
+import { requireAuth } from "@/lib/require-auth";
 
 interface MemberFormProps {
   data: Member | null;
@@ -19,7 +21,8 @@ interface MemberFormProps {
 /**
  * create different titles if there is data and if there is no data
  * have a form to render the values
- * 
+ * submission: there are 2 cases post or patch
+ * let response and use it for errors
  */
 
 const formSchema = z.object({
@@ -38,6 +41,7 @@ type MemberFormValues = z.infer<typeof formSchema>;
 export const MemberForm: React.FC<MemberFormProps> = ({
   data
 }) => {
+  const navigate = useNavigate();
   const params = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -63,12 +67,36 @@ export const MemberForm: React.FC<MemberFormProps> = ({
     }
   })
 
-  const onSubmit = async() => {
+  
+
+  const onSubmit = async(values: MemberFormValues) => {
+
+    const formattedValues = {
+      ...values,
+      phoneNumber: values.phoneNumber.toString(),
+      idNumber: values.idNumber.toString(),
+    }
+   
     try {
       setLoading(true);
-      toast.success(toastMessage);
+      let response ;
+      const config = await requireAuth();
+      if(data) {
+        response = await axios.patch(`/api/members/${params.memberId}`, formattedValues, config)
+      } else {
+        response = await axios.post(`/api/members?clusterId=${params.clusterId}`, formattedValues, config)
+      }
+      if (response.status === 200 || response.status === 201) {
+        toast.success(toastMessage);
+        window.location.href = `/${params.clusterId}/members`;
+      } else if (response.status === 401) {
+        navigate('/signin')
+      } else {
+        toast.error('Something Went Wrong!')
+      }
     } catch (error) {
       console.log('MEMBERFORMERROR', error);
+
     } finally {
       setLoading(false);
     }
@@ -109,7 +137,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                     <FormItem>
                       <FormLabel>FirstName</FormLabel>
                       <FormControl>
-                        <Input disabled={loading} placeholder='Enter your first name' {...field} className="bg-cyan-700 text-accent"
+                        <Input disabled={loading || (data !== null)} placeholder='Enter your first name' {...field} className="bg-cyan-700 text-accent"
                         />
                       </FormControl>
                       <FormMessage/>
@@ -122,7 +150,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                     <FormItem>
                       <FormLabel>Surname</FormLabel>
                       <FormControl>
-                        <Input disabled={loading} placeholder='Enter your surname' {...field} className="bg-cyan-700 text-accent"
+                        <Input disabled={loading || (data !== null)} placeholder='Enter your surname' {...field} className="bg-cyan-700 text-accent"
                         />
                       </FormControl>
                       <FormMessage/>
@@ -147,7 +175,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                   render={({field})=> (
                     <FormItem>
                       <FormLabel>Gender</FormLabel>
-                      <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                      <Select disabled={loading || (data !== null)} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger className="bg-cyan-700 text-accent">
                             <SelectValue placeholder='male or female' {...field}  defaultValue={field.value}
@@ -170,7 +198,7 @@ export const MemberForm: React.FC<MemberFormProps> = ({
                     <FormItem>
                       <FormLabel>ID Number</FormLabel>
                       <FormControl>
-                        <Input disabled={loading} placeholder='Enter your ID number' {...field} className="bg-cyan-700 text-accent"
+                        <Input disabled={loading || (data !== null)} placeholder='Enter your ID number' {...field} className="bg-cyan-700 text-accent"
                         onChange={onIdNumberChange}
                         />
                       </FormControl>

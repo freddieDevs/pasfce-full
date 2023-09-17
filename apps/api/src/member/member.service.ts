@@ -16,6 +16,7 @@ export class MemberService {
   ): Promise<Member> {
     const { firstName, surname, email, gender, idNumber, phoneNumber } =
       createMemberDto;
+    //TODO: handle the case where there is no clusterId;
 
     const member = await this.prisma.member.create({
       data: {
