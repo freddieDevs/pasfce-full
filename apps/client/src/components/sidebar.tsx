@@ -43,6 +43,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       href: `/${params.clusterId}/savings`,
       label: 'Savings',
       active: pathname === `/${params.clusterId}/savings`,
+    },
+    {
+      href: `/${params.clusterId}/reports`,
+      label: 'Reports',
+      active: pathname === `/${params.clusterId}/reports`,
     }
   ]
 

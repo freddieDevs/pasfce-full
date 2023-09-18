@@ -10,6 +10,7 @@ import { SigninPage } from "@/routes/signin";
 import { ModalProvider } from "@/providers/modal-provider";
 import { ClusterPage } from "./routes/cluster-page";
 import { clustersLoader } from "./lib/loaders";
+import { ReportsPage } from "./routes/reports";
 
 function App() {
   const router = createBrowserRouter([
@@ -45,8 +46,10 @@ function App() {
           path: '/:clusterId/savings',
           element: <SavingsPage />
         },
-
-       
+        {
+          path: '/:clusterId/reports',
+          element: <ReportsPage />,
+        }
       ]
     },
     {
