@@ -39,7 +39,7 @@ function App() {
         },
         {
           path: '/:clusterId/staffs',
-          element: <StaffPage />
+          element: <StaffPage />,
         },
         {
           path: '/:clusterId/savings',

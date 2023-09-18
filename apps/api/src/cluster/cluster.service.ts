@@ -43,7 +43,20 @@ export class ClusterService {
       include: {
         members: true,
         reports: true,
-        staff: true,
+        staff: {
+          select: {
+            id: true,
+            firstname: true,
+            surname: true,
+            staffKey: true,
+            phoneNumber: true,
+            email: true,
+            idNumber: true,
+            createdAt: true,
+            updatedAt: true,
+            jobPosition: true,
+          },
+        },
       },
     };
     if (searchterm) {

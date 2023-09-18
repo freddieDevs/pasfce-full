@@ -2,13 +2,16 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { GetStaffFilterDto } from './dto/get-staff-filter.dto';
 import { Prisma, Staff } from '@prisma/client';
-import { SafeStaffMembers } from '../management/safe-staff-members.interface';
+import {
+  SafeStaffMembers,
+  SafestStaff,
+} from '../management/safe-staff-members.interface';
 
 @Injectable()
 export class StaffService {
   constructor(private prisma: PrismaService) {}
 
-  async getStaff(filterDto: GetStaffFilterDto): Promise<SafeStaffMembers[]> {
+  async getStaff(filterDto: GetStaffFilterDto): Promise<SafestStaff[]> {
     const { jobPosition, searchterm } = filterDto ?? {};
     const query: Prisma.StaffFindManyArgs = {
       where: {},
@@ -42,7 +45,9 @@ export class StaffService {
       ];
     }
     const staffMembers: Staff[] = await this.prisma.staff.findMany(query);
-    const filteredStaff = staffMembers.map(({ password, ...rest }) => rest);
+    const filteredStaff = staffMembers.map(
+      ({ password, salt, ...rest }) => rest,
+    );
     return filteredStaff;
   }
 

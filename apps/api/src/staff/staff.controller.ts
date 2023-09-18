@@ -10,7 +10,10 @@ import {
 import { StaffService } from './staff.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GetStaffFilterDto } from './dto/get-staff-filter.dto';
-import { SafeStaffMembers } from '../management/safe-staff-members.interface';
+import {
+  SafeStaffMembers,
+  SafestStaff,
+} from '../management/safe-staff-members.interface';
 
 @Controller('staff')
 @UseGuards(AuthGuard())
@@ -20,7 +23,7 @@ export class StaffController {
   @Get()
   async getStaff(
     @Query(ValidationPipe) filterDto: GetStaffFilterDto,
-  ): Promise<SafeStaffMembers[]> {
+  ): Promise<SafestStaff[]> {
     return this.staffService.getStaff(filterDto);
   }
 
