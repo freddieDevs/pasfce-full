@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate, useParams } from "react-router-dom";
 import { StaffColumn } from "./staffs-columns";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -14,8 +14,8 @@ interface StaffCellActionProps {
 export const StaffCellAction: React.FC<StaffCellActionProps> = ({
   data
 }) => {
-  const params = useParams();
-  const navigate = useNavigate();
+  // const params = useParams();
+  // const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ export const StaffCellAction: React.FC<StaffCellActionProps> = ({
               <Copy className="mr-2 h-4 w-4"/>
               Copy Id
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={()=> navigate(`/${params.clusterId}/staffs/${data.id}`)}>
+            <DropdownMenuItem onClick={()=> {}}>
               <Edit className="mr-2 h-4 w-4"/>
               View
             </DropdownMenuItem>

@@ -7,22 +7,14 @@ import { Cluster, Staff } from '@/types/types';
 import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
+
 /**
- * APPROACHES: 
- * 1. USING OUTLET CONTEXT
- * its very fast but i have to implement a loader or try state managemnt to make the data be up to date 
- * here i have to count a staff comes from how many clusters and thats the clusterCount, reports count we have to search reports for those clusters done by each staff, members count members in each cluster created by the staff 
- * render all the staff in the system
- * its seems i have to use a loader
- * this is where you can add a new staff
- * we can also edit a staff
- * also view staff details
- * loaders are kinda slow somehow
+ * yet to create the individual staff pages
  */
 export const StaffPage = () => {
-  const navigate = useNavigate();
-  const params = useParams();
+  // const navigate = useNavigate();
+  // const params = useParams();
   const clusterData = useOutletContext() as Cluster[] | null;
   const [staffs, setStaffs] = useState<Staff[] | []>([]);
 
@@ -44,7 +36,7 @@ export const StaffPage = () => {
   // console.log(staffs, 'STAFFS');
   // console.log('CLUSTERDATA', staffs);
 
-  const formattedClusters: StaffColumn[] = staffs.map((item) => {
+  const formattedStaffs: StaffColumn[] = staffs.map((item) => {
     //initialize members and reports count 
     let membersCount = 0;
     let reportsCount = 0;
@@ -77,7 +69,7 @@ export const StaffPage = () => {
           title='Staff Data' description='Manage Staff'
         />
         <Button 
-          onClick={() => navigate(`/${params.clusterId}/staffs/new`)} 
+          onClick={() => {}} 
           className="bg-cyan-700 text-accent hover:bg-cyan-800"
         >
           <Plus className='mr-2 h-4 w-4'/>
@@ -85,7 +77,7 @@ export const StaffPage = () => {
         </Button>
       </div>
       <Separator className='mt-4' />
-      <DataTable searchKey='surname' columns={staffsColumn} data={formattedClusters}/>
+      <DataTable searchKey='surname' columns={staffsColumn} data={formattedStaffs}/>
     </>
   )
 }
