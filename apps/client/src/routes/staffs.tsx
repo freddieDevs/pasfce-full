@@ -1,8 +1,10 @@
-// import { DataTable } from '@/components/data-table';
+import { DataTable } from '@/components/data-table';
+import { StaffColumn, staffsColumn } from '@/components/staff/staffs-columns';
 import { Button } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
 import { Cluster, Staff } from '@/types/types';
+import { format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
@@ -41,6 +43,33 @@ export const StaffPage = () => {
   }, [clusterData]);
   // console.log(staffs, 'STAFFS');
   // console.log('CLUSTERDATA', staffs);
+
+  const formattedClusters: StaffColumn[] = staffs.map((item) => {
+    //initialize members and reports count 
+    let membersCount = 0;
+    let reportsCount = 0;
+
+    // iterate through the clusterData to come up with the count
+    clusterData?.forEach((cluster) => {
+      //ensure there is a cluster and the staffId match
+      if (cluster.staff && cluster.staff.id === item.id) {
+        membersCount += cluster.members.length;
+        reportsCount += cluster.reports.length;
+      }
+    });
+
+    return {
+      id: item.id,
+      firstName: item.firstname,
+      surname: item.surname,
+      email: item.email,
+      phoneNumber: item.phoneNumber,
+      jobPosition: item.jobPosition,
+      createdAt: format(new Date(item.createdAt), 'dd MMMM yyyy'),
+      members: membersCount,
+      reports: reportsCount,
+    };
+  });
   return (
     <>
       <div className='flex items-center justify-between'>
@@ -52,10 +81,11 @@ export const StaffPage = () => {
           className="bg-cyan-700 text-accent hover:bg-cyan-800"
         >
           <Plus className='mr-2 h-4 w-4'/>
+          Add a new Staff
         </Button>
       </div>
       <Separator className='mt-4' />
-      {/* <DataTable searchKey='' columns={} data={}/> */}
+      <DataTable searchKey='surname' columns={staffsColumn} data={formattedClusters}/>
     </>
   )
 }
