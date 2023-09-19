@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Cluster, Report } from "@/types/types";
-import cluster from "cluster";
 import { format } from "date-fns";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -80,7 +79,7 @@ export const ReportsPage = () => {
           title='Reports Data' description='Manage Reports'
         />
         <Button 
-          onClick={() => {}} 
+          onClick={() => navigate(`/${params.clusterId}/reports/new`)} 
           className="bg-cyan-700 text-accent hover:bg-cyan-800"
         >
           <Plus className='mr-2 h-4 w-4'/>

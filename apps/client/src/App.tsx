@@ -11,6 +11,7 @@ import { ModalProvider } from "@/providers/modal-provider";
 import { ClusterPage } from "./routes/cluster-page";
 import { clustersLoader } from "./lib/loaders";
 import { ReportsPage } from "./routes/reports";
+import { ReportIdPage } from "./routes/report-id";
 
 function App() {
   const router = createBrowserRouter([
@@ -49,6 +50,10 @@ function App() {
         {
           path: '/:clusterId/reports',
           element: <ReportsPage />,
+        },
+        {
+          path: '/:clusterId/reports/:reportId',
+          element: <ReportIdPage />,
         }
       ]
     },
