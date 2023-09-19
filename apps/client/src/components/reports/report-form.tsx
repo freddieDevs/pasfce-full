@@ -12,6 +12,7 @@ import { Heading } from "../ui/heading";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useUpdatedReport } from "@/hooks/use-updated-report";
 
 interface ReportFormProps {
   data: Report | null;
@@ -30,6 +31,7 @@ export const ReportForm: React.FC<ReportFormProps> = ({
 }) => {
   const navigate = useNavigate();
   const params = useParams();
+  const { setUpdatedReport } = useUpdatedReport();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -65,8 +67,11 @@ export const ReportForm: React.FC<ReportFormProps> = ({
         response = await axios.post(`/api/reports?clusterId=${params.clusterId}`, formattedValues, config)
       }
       if (response.status === 200 || response.status === 201) {
+        const updatedReport = response.data;
+        setUpdatedReport(updatedReport);
         toast.success(toastMessage);
-        window.location.href = `/${params.clusterId}/reports`;
+        // window.location.href = `/${params.clusterId}/reports`;
+        navigate(`/${params.clusterId}/reports`, { state: {updatedReport} });
       } else if (response.status === 401) {
         navigate('/signin')
       } else {

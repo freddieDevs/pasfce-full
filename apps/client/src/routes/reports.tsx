@@ -3,6 +3,7 @@ import { ReportColumn, reportsColumn } from "@/components/reports/reports-column
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
+import { useUpdatedReport } from "@/hooks/use-updated-report";
 import { Cluster, Report } from "@/types/types";
 import { format } from "date-fns";
 import { Plus } from "lucide-react";
@@ -17,24 +18,36 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom"
  * there shall also be an individual reports page for writing and editing reports
  */
 export const ReportsPage = () => {
-
+  
   const navigate = useNavigate();
   const params = useParams();
+  // const location = useLocation();
+  // const state = location.state as {updatedReport: Report | null};
+  const { getUpdatedReport } = useUpdatedReport();
+  const updated = getUpdatedReport();
+  // console.log('UPDATED', updated);
 
   const clusterData = useOutletContext() as Cluster[] | null;
   const [reports, setReports] = useState<Report[] | []>([]);
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const allReports = [] as Report[];
+  //   clusterData?.forEach((cluster) => {
+  //     // check if there are reports
+  //     if (cluster?.reports) {
+  //       //add all reports from this cluster to all reports
+  //       allReports.push(... cluster.reports);
+  //     }
+  //   });
+  //   setReports(allReports);
+  //   setLoading(false);
+  // }, [clusterData]);
+  // // console.log('CLUSTERDATA', clusterData);
+  // // console.log('REPORTS', reports);
 
   useEffect(() => {
-    /**
-     * i need the reports all of them from each cluster 
-     * a cluster can have more than one report
-     * fields for the formatted reports: the normal reports field 
-     * plus the writer who is the owner of the cluster, the cluster name, county the cluster belongs to 
-     * PROBLEM: 
-     * i need to make the actions button disabled if staffId doesnt match the clusterId to ensure that only the author of the report is the one who can edit the report alone and it should also be edited within its own cluster(using the clusterId as the guard)
-     */
     const allReports = [] as Report[];
-
     clusterData?.forEach((cluster) => {
       // check if there are reports
       if (cluster?.reports) {
@@ -42,11 +55,29 @@ export const ReportsPage = () => {
         allReports.push(... cluster.reports);
       }
     });
-    setReports(allReports);
-  }, [clusterData]);
-  // console.log('CLUSTERDATA', clusterData);
-  // console.log('REPORTS', reports);
 
+    //update the specific report if it exists in the state
+    if (updated !== null) {
+      const reportIndex = allReports.findIndex((report) => report.id === updated?.id);
+      if (reportIndex !== -1) {
+        //create a copy of the reports array and update
+      const updatedReports = [...allReports]
+      updatedReports[reportIndex] = updated; 
+      // update the reports state
+      console.log(updatedReports);
+      setReports(updatedReports);
+      }
+    } else {
+      setReports(allReports);
+    }
+    setLoading(false);
+  }, [clusterData, updated]); //only update when the state changes
+  if (loading) {
+    return null;
+  }
+  // console.log(state);
+  // console.log('REPORTS', reports);
+ 
   const formattedReports: ReportColumn[] = reports.map((report) => {
     let writtenBy;
     let clusterName;
@@ -64,6 +95,7 @@ export const ReportsPage = () => {
       clusterId = cluster?.id;
     }
     
+   
     return {
       id: report.id,
       createdAt: format(new Date(report.createdAt), 'dd MMMM yyyy'),

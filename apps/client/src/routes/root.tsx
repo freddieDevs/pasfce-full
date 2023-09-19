@@ -14,6 +14,7 @@ export const Root = () => {
   const navigate = useNavigate();
   const data = useLoaderData() as Cluster[] | string;
   const [clusters, setClusters] = useState<Cluster[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (typeof data === 'string' && data === 'unauthorized') {
@@ -22,7 +23,12 @@ export const Root = () => {
     } else if (Array.isArray(data)) {
       setClusters(data);
     }
+    setLoading(false);
   }, [data, navigate]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>

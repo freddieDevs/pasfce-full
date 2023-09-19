@@ -14,6 +14,7 @@ import { ReportsPage } from "./routes/reports";
 import { ReportIdPage } from "./routes/report-id";
 
 function App() {
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -32,8 +33,8 @@ function App() {
         },
         {
           path: '/:clusterId/members',
-          element: <MembersPage />
-         
+          element: <MembersPage />,
+          
         },
         {
           path: '/:clusterId/members/:memberId',
@@ -50,6 +51,7 @@ function App() {
         {
           path: '/:clusterId/reports',
           element: <ReportsPage />,
+          
         },
         {
           path: '/:clusterId/reports/:reportId',

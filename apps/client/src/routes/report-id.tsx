@@ -1,14 +1,17 @@
 import { ReportForm } from "@/components/reports/report-form";
 import { Cluster, Report } from "@/types/types";
 import { useEffect, useState } from "react";
-import { useOutletContext, useParams } from "react-router-dom"
+import { useLocation, useOutletContext, useParams } from "react-router-dom"
 
 export const ReportIdPage = () => {
   const clusterData = useOutletContext() as Cluster[] | null;
   const params = useParams();
-
+  const location = useLocation();
+  const state = location.state;
+  console.log(state);
   const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     if (clusterData && params.clusterId) {
