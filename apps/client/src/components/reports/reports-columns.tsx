@@ -6,6 +6,7 @@ export type ReportColumn = {
   createdAt: string;
   newMembers: string;
   inAttendance: string;
+  totalMembers: string;
   writtenBy: string | undefined;
   countyName: string | undefined;
   clusterName: string | undefined;
@@ -28,6 +29,10 @@ export const reportsColumn: ColumnDef<ReportColumn>[] = [
   {
     accessorKey: 'newMembers',
     header: 'New Members Present',
+  },
+  {
+    accessorKey: 'totalMembers',
+    header: 'Total Cluster Members'
   },
   {
     accessorKey: 'writtenBy',

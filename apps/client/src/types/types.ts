@@ -18,6 +18,7 @@ export interface Report {
   inAttendance: string;
   newMembers: string;
   staffId: string;
+  clusterTotal: string;
 }
 
 export interface Member {

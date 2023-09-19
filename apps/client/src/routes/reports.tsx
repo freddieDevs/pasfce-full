@@ -21,30 +21,12 @@ export const ReportsPage = () => {
   
   const navigate = useNavigate();
   const params = useParams();
-  // const location = useLocation();
-  // const state = location.state as {updatedReport: Report | null};
   const { getUpdatedReport } = useUpdatedReport();
   const updated = getUpdatedReport();
-  // console.log('UPDATED', updated);
 
   const clusterData = useOutletContext() as Cluster[] | null;
   const [reports, setReports] = useState<Report[] | []>([]);
   const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const allReports = [] as Report[];
-  //   clusterData?.forEach((cluster) => {
-  //     // check if there are reports
-  //     if (cluster?.reports) {
-  //       //add all reports from this cluster to all reports
-  //       allReports.push(... cluster.reports);
-  //     }
-  //   });
-  //   setReports(allReports);
-  //   setLoading(false);
-  // }, [clusterData]);
-  // // console.log('CLUSTERDATA', clusterData);
-  // // console.log('REPORTS', reports);
 
   useEffect(() => {
     const allReports = [] as Report[];
@@ -64,7 +46,6 @@ export const ReportsPage = () => {
       const updatedReports = [...allReports]
       updatedReports[reportIndex] = updated; 
       // update the reports state
-      console.log(updatedReports);
       setReports(updatedReports);
       }
     } else {
@@ -75,8 +56,6 @@ export const ReportsPage = () => {
   if (loading) {
     return null;
   }
-  // console.log(state);
-  // console.log('REPORTS', reports);
  
   const formattedReports: ReportColumn[] = reports.map((report) => {
     let writtenBy;
@@ -99,6 +78,7 @@ export const ReportsPage = () => {
     return {
       id: report.id,
       createdAt: format(new Date(report.createdAt), 'dd MMMM yyyy'),
+      totalMembers: report.clusterTotal,
       newMembers: report.newMembers,
       inAttendance: report.inAttendance,
       writtenBy,
@@ -107,7 +87,7 @@ export const ReportsPage = () => {
       clusterId,
     };
   });
-  // console.log('FORMATTEDREPORTS', formattedReports);
+  
   return (
     <>
        <div className='flex items-center justify-between'>
