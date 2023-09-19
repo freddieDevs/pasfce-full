@@ -28,7 +28,7 @@ export const ReportIdPage = () => {
   if (loading) {
     return null;
   }
-  console.log('REPORT', report);
+  // console.log('REPORT', report);
   return (
     <>
       <ReportForm data={report} />

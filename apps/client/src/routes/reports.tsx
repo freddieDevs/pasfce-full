@@ -30,7 +30,8 @@ export const ReportsPage = () => {
      * a cluster can have more than one report
      * fields for the formatted reports: the normal reports field 
      * plus the writer who is the owner of the cluster, the cluster name, county the cluster belongs to 
-     * 
+     * PROBLEM: 
+     * i need to make the actions button disabled if staffId doesnt match the clusterId to ensure that only the author of the report is the one who can edit the report alone and it should also be edited within its own cluster(using the clusterId as the guard)
      */
     const allReports = [] as Report[];
 
@@ -49,7 +50,8 @@ export const ReportsPage = () => {
   const formattedReports: ReportColumn[] = reports.map((report) => {
     let writtenBy;
     let clusterName;
-    let  countyName;
+    let countyName;
+    let clusterId;
     // get name of cluster, county, and the owner of cluster 
     // find the cluster associated with the report
     const cluster = clusterData?.find((cluster) => cluster.reports?.some((r) => r.id === report.id));
@@ -59,6 +61,7 @@ export const ReportsPage = () => {
       writtenBy = cluster.staff?.surname;
       clusterName = cluster?.name;
       countyName = cluster?.county;
+      clusterId = cluster?.id;
     }
     
     return {
@@ -69,6 +72,7 @@ export const ReportsPage = () => {
       writtenBy,
       countyName,
       clusterName,
+      clusterId,
     };
   });
   // console.log('FORMATTEDREPORTS', formattedReports);

@@ -36,6 +36,7 @@ export const ReportCellAction: React.FC<ReportCellActionProps> = ({
       setOpen(false);
     }
   }
+  const isReportFromCluster = data.clusterId === params.clusterId
   return (
     <>
       <AlertModal 
@@ -44,7 +45,7 @@ export const ReportCellAction: React.FC<ReportCellActionProps> = ({
         onClose={()=> setOpen(false)}
         onConfirm={onDelete}
       />
-        <DropdownMenu>
+        {isReportFromCluster && (<DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
@@ -68,7 +69,7 @@ export const ReportCellAction: React.FC<ReportCellActionProps> = ({
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu>)}
     </>
   )
 }

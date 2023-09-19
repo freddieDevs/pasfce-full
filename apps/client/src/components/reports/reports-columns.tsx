@@ -9,6 +9,7 @@ export type ReportColumn = {
   writtenBy: string | undefined;
   countyName: string | undefined;
   clusterName: string | undefined;
+  clusterId: string | undefined;
 }
 
 export const reportsColumn: ColumnDef<ReportColumn>[] = [

@@ -53,8 +53,8 @@ export const MembersPage = () => {
   return (
     <>
       <div className="flex items-center justify-between">
-      <Heading title="Sample Data"
-        description="Manage your data"
+      <Heading title="Members Data"
+        description="Manage your members"
       />
       {/* add a button for adding new members */}
       <Button onClick={() => navigate(`/${params.clusterId}/members/new`)} className="bg-cyan-700 text-accent hover:bg-cyan-800">
