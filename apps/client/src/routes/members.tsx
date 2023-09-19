@@ -8,6 +8,7 @@ import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { MemberColumn, memberColumns } from "@/components/members/members-columns"
+import { useUpdatedMember } from "@/hooks/use-updated-member"
 
 /**
  * go through clusters and filter members who belong to the particular cluster only and render them
@@ -20,24 +21,37 @@ export const MembersPage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const clusterData = useOutletContext() as Cluster[] | null;
+  const { getUpdatedMember } = useUpdatedMember();
+  const updatedMember = getUpdatedMember();
   const [members, setMembers] = useState<Member[] | []>([]);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (clusterData && params.clusterId) {
       const currentCluster = clusterData.find((cluster) => cluster.id === params.clusterId);
       if (currentCluster) {
-        setMembers(currentCluster.members);
+        if (updatedMember !== null) {
+          const memberIndex = currentCluster.members.findIndex((member) => member.id === updatedMember.id);
+          if (memberIndex !== -1) {
+            // create a copy of the members array and update 
+            const updatedMembersArray = [...currentCluster.members];
+            updatedMembersArray[memberIndex] = updatedMember;
+            setMembers(updatedMembersArray);
+          } 
+        } else {
+          setMembers(currentCluster.members);
+        }
+        
       } else {
         setMembers([]);
       }
     }
-    // setLoading(false);
-  }, [clusterData, params.clusterId]);
+    setLoading(false);
+  }, [clusterData, params.clusterId, updatedMember]);
 
-  // if (loading) {
-  //   return null;
-  // }
+  if (loading) {
+    return null;
+  }
 
   const formattedMembers: MemberColumn[] = members.map((item) => ({
     id: item.id,

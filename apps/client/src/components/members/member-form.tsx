@@ -13,6 +13,7 @@ import { Status } from '@/types/types'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import axios from "axios";
 import { requireAuth } from "@/lib/require-auth";
+import { useUpdatedMember } from "@/hooks/use-updated-member";
 
 interface MemberFormProps {
   data: Member | null;
@@ -43,6 +44,8 @@ export const MemberForm: React.FC<MemberFormProps> = ({
 }) => {
   const navigate = useNavigate();
   const params = useParams();
+  const { setUpdatedMember } = useUpdatedMember();
+
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
  
@@ -88,7 +91,8 @@ export const MemberForm: React.FC<MemberFormProps> = ({
       }
       if (response.status === 200 || response.status === 201) {
         toast.success(toastMessage);
-        window.location.href = `/${params.clusterId}/members`;
+        setUpdatedMember(response.data);
+        navigate(`/${params.clusterId}/members`);
       } else if (response.status === 401) {
         navigate('/signin')
       } else {
