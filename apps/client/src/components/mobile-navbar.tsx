@@ -2,8 +2,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel
 import { Menu } from "lucide-react"
 import { Sidebar } from "@/components/sidebar"
 import { Button } from "@/components/ui/button"
+import { Cluster } from "@/types/types"
 
-export const MobileNavbar = () => {
+interface MobileNavbarProps {
+  data: Cluster[] | null;
+}
+export const MobileNavbar: React.FC<MobileNavbarProps> = ({
+  data
+}) => {
   
   return (
     <DropdownMenu>
@@ -16,7 +22,7 @@ export const MobileNavbar = () => {
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Sidebar/>
+          <Sidebar data={data}/>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

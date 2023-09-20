@@ -46,7 +46,7 @@ export const ClusterPage = () => {
             <h2 className="md:hidden text-4xl font-bold tracking-wide">PAFCE</h2>
           </div>
           <div className="md:hidden">
-            <MobileNavbar />
+            <MobileNavbar data={clusters}/>
           </div>
         </div>
       

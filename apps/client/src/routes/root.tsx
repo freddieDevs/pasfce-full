@@ -43,7 +43,7 @@ export const Root = () => {
             <h2 className="md:hidden text-4xl font-bold tracking-wide">PAFCE</h2>
           </div>
           <div className="md:hidden">
-            <MobileNavbar />
+            <MobileNavbar data={clusters} />
           </div>
         </div>
         <div className="flex h-[100vh] w-screen mb-5 py-6 ">
