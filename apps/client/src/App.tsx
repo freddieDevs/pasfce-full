@@ -12,6 +12,7 @@ import { ClusterPage } from "./routes/cluster-page";
 import { clustersLoader } from "./lib/loaders";
 import { ReportsPage } from "./routes/reports";
 import { ReportIdPage } from "./routes/report-id";
+import { ToastProvider } from "./providers/toast-provider";
 
 function App() {
 
@@ -72,6 +73,7 @@ function App() {
     
     <>
       <ModalProvider />
+      <ToastProvider />
       <RouterProvider router={router}/>
     </>
   )
